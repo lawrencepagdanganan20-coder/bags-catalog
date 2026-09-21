@@ -54,7 +54,7 @@
       { id: 'h15', name: 'CLN Arceli Handbag', category: 'Handbags', image: './images/arceli.avif' },
       { id: 'h16', name: 'CLN Staku Handbag', category: 'Handbags', image: './images/staku.avif' },
 
-      // Shoulder Bags (Blaire removed)
+      // Shoulder Bags
       { id: 's1', name: 'CLN 0125D-Chandria Shoulder Bag', category: 'Shoulder Bags', image: './images/chandria.avif' },
       { id: 's2', name: 'CLN 1123O-Ohaine Shoulder Bag', category: 'Shoulder Bags', image: './images/ohaine.avif' },
       { id: 's3', name: 'CLN 0925O-Solana Shoulder Bag', category: 'Shoulder Bags', image: './images/solana.avif' },
@@ -96,8 +96,10 @@
       const [searchQuery, setSearchQuery] = useState('');
       const [activeCategory, setActiveCategory] = useState('All');
       const [favoriteIds, setFavoriteIds] = useState([]);
+      const [selectedBag, setSelectedBag] = useState(null);
 
-      const toggleFavorite = (id) => {
+      const toggleFavorite = (id, e) => {
+        if (e) e.stopPropagation();
         setFavoriteIds(prev =>
           prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
         );
@@ -119,14 +121,14 @@
       }, [searchQuery, activeCategory, favoriteIds]);
 
       return (
-        <div class="min-h-screen">
+        <div class="min-h-screen relative">
           {/* Header */}
-          <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-pink-100 shadow-sm">
+          <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-pink-100 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
               <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="text-center md:text-left">
                   <h1 class="font-serif text-3xl font-bold tracking-tight text-rose-500">CLN Bags Catalog</h1>
-                  <p class="text-xs text-pink-400 font-medium tracking-wide uppercase mt-0.5">Modest Elegance & Timeless Style</p>
+                  <p class="text-xs text-pink-400 font-medium tracking-wide uppercase mt-0.5">Catalog Made Only For You</p>
                 </div>
 
                 <div class="relative w-full md:w-80">
@@ -143,8 +145,16 @@
             </div>
           </header>
 
+          {/* Color Availability Note */}
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <div class="bg-rose-50 border border-rose-200/80 text-rose-700 text-xs sm:text-sm px-4 py-2.5 rounded-full text-center shadow-sm flex items-center justify-center gap-2">
+              <span>🎨</span>
+              <span class="font-medium">Note: Additional color variants are available for select bag models!</span>
+            </div>
+          </div>
+
           {/* Quote Hero Banner */}
-          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-4">
             <div class="bg-gradient-to-r from-pink-100 via-rose-100/60 to-pink-100 border border-pink-200/60 rounded-3xl p-6 sm:p-8 text-center shadow-sm relative overflow-hidden">
               <div class="relative z-10 max-w-2xl mx-auto">
                 <span class="text-rose-400 text-2xl font-serif">“</span>
@@ -195,7 +205,8 @@
                   return (
                     <div
                       key={bag.id}
-                      class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group"
+                      onClick={() => setSelectedBag(bag)}
+                      class="bg-white rounded-2xl overflow-hidden border border-pink-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col group cursor-pointer"
                     >
                       {/* Image container */}
                       <div class="relative aspect-square overflow-hidden bg-pink-50/50">
@@ -212,9 +223,14 @@
                           {bag.category}
                         </span>
                         
+                        {/* Zoom Indicator overlay badge */}
+                        <span class="absolute bottom-3 left-3 bg-rose-500/80 backdrop-blur-md text-[10px] text-white px-2.5 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                          🔍 Tap to Zoom
+                        </span>
+
                         {/* Heart Button */}
                         <button
-                          onClick={() => toggleFavorite(bag.id)}
+                          onClick={(e) => toggleFavorite(bag.id, e)}
                           class="absolute top-3 right-3 p-2 rounded-full bg-white/90 backdrop-blur-md text-rose-400 hover:text-rose-600 hover:scale-110 active:scale-95 transition-all shadow-md border border-pink-100"
                         >
                           {isHearted ? '❤️' : '🤍'}
@@ -233,7 +249,7 @@
                         <div class="mt-4 pt-3 border-t border-pink-50 flex items-center justify-between">
                           <span class="text-xs text-pink-400 font-medium">Authentic Style</span>
                           <button
-                            onClick={() => toggleFavorite(bag.id)}
+                            onClick={(e) => toggleFavorite(bag.id, e)}
                             class="text-xs font-medium text-rose-400 hover:text-rose-600 transition-colors flex items-center gap-1"
                           >
                             {isHearted ? '❤️ Hearted' : '🤍 Heart bag'}
@@ -258,6 +274,60 @@
               </div>
             )}
           </main>
+
+          {/* Zoom Modal Overlay */}
+          {selectedBag && (
+            <div 
+              class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 transition-all duration-300"
+              onClick={() => setSelectedBag(null)}
+            >
+              <div 
+                class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-pink-100 relative flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Modal Top Bar */}
+                <div class="p-4 bg-rose-50/80 border-b border-pink-100 flex items-center justify-between">
+                  <button
+                    onClick={() => setSelectedBag(null)}
+                    class="px-4 py-2 rounded-full bg-rose-500 hover:bg-rose-600 text-white text-xs sm:text-sm font-semibold transition-all shadow-md flex items-center gap-1.5 active:scale-95"
+                  >
+                    ← Back to Catalog
+                  </button>
+
+                  <button
+                    onClick={(e) => toggleFavorite(selectedBag.id, e)}
+                    class="px-3.5 py-1.5 rounded-full bg-white border border-pink-200 text-xs sm:text-sm font-medium text-rose-500 hover:bg-rose-50 transition-colors flex items-center gap-1"
+                  >
+                    {favoriteIds.includes(selectedBag.id) ? '❤️ Hearted' : '🤍 Heart Bag'}
+                  </button>
+                </div>
+
+                {/* Zoomed Image */}
+                <div class="relative overflow-auto flex-1 flex items-center justify-center bg-pink-50/30 p-4 min-h-[300px]">
+                  <img
+                    src={selectedBag.image}
+                    alt={selectedBag.name}
+                    class="max-h-[60vh] w-auto object-contain rounded-xl shadow-md"
+                    onError={(e) => {
+                      e.target.onerror = null; 
+                      e.target.src = 'https://via.placeholder.com/600x600/fff0f5/e11d48?text=CLN+Bag';
+                    }}
+                  />
+                </div>
+
+                {/* Modal Footer */}
+                <div class="p-6 bg-white border-t border-pink-100">
+                  <span class="inline-block bg-pink-100 text-rose-600 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+                    {selectedBag.category}
+                  </span>
+                  <h2 class="text-xl sm:text-2xl font-serif font-bold text-gray-800">
+                    {selectedBag.name}
+                  </h2>
+                  <p class="text-xs text-pink-400 font-medium mt-1">CLN Official Store Product</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
