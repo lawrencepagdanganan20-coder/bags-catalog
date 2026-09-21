@@ -11,9 +11,6 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <!-- Babel Compiler for JSX -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
     body {
@@ -33,65 +30,64 @@
 
     const BAGS_DATA = [
       // Tote Bags
-      { id: 't1', name: 'CLN 0621T-Karoline Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 't2', name: 'CLN 0422T-Kiarra Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 't3', name: 'CLN 0824T-Karrie Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 't4', name: 'CLN 0924T-Steffi Totebag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 't5', name: 'CLN Lizzie Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+      { id: 't1', name: 'CLN 0621T-Karoline Tote Bag', category: 'Tote Bags', image: './images/karoline.avif' },
+      { id: 't2', name: 'CLN 0422T-Kiarra Tote Bag', category: 'Tote Bags', image: './images/kiarra.avif' },
+      { id: 't3', name: 'CLN 0824T-Karrie Tote Bag', category: 'Tote Bags', image: './images/karrie.avif' },
+      { id: 't4', name: 'CLN 0924T-Steffi Totebag', category: 'Tote Bags', image: './images/steffi.avif' },
+      { id: 't5', name: 'CLN Lizzie Tote Bag', category: 'Tote Bags', image: './images/lizzie.avif' },
 
       // Handbags
-      { id: 'h1', name: 'CLN 0521H-Addeline Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h2', name: 'CLN 0724H-Tattah Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h3', name: 'CLN 0325H-Trevor Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h4', name: 'CLN 1125D-Armina Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h5', name: 'CLN Vienne Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h6', name: 'CLN Vera Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h7', name: 'CLN Lianne Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h8', name: 'CLN Ethel Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h9', name: 'CLN Farlane Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h10', name: 'CLN Puff Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h11', name: 'CLN Fumi Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h12', name: 'CLN Adora Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h13', name: 'CLN Danny Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h14', name: 'CLN Lyra Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h15', name: 'CLN Arceli Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 'h16', name: 'CLN Staku Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+      { id: 'h1', name: 'CLN 0521H-Addeline Handbag', category: 'Handbags', image: './images/addeline.avif' },
+      { id: 'h2', name: 'CLN 0724H-Tattah Handbag', category: 'Handbags', image: './images/tattah.avif' },
+      { id: 'h3', name: 'CLN 0325H-Trevor Handbag', category: 'Handbags', image: './images/trevor.avif' },
+      { id: 'h4', name: 'CLN 1125D-Armina Handbag', category: 'Handbags', image: './images/armina.avif' },
+      { id: 'h5', name: 'CLN Vienne Handbag', category: 'Handbags', image: './images/vienne.avif' },
+      { id: 'h6', name: 'CLN Vera Handbag', category: 'Handbags', image: './images/vera.avif' },
+      { id: 'h7', name: 'CLN Lianne Handbag', category: 'Handbags', image: './images/lianne.avif' },
+      { id: 'h8', name: 'CLN Ethel Handbag', category: 'Handbags', image: './images/ethel.avif' },
+      { id: 'h9', name: 'CLN Farlane Handbag', category: 'Handbags', image: './images/farlane.avif' },
+      { id: 'h10', name: 'CLN Puff Handbag', category: 'Handbags', image: './images/puff.avif' },
+      { id: 'h11', name: 'CLN Fumi Handbag', category: 'Handbags', image: './images/fumi.avif' },
+      { id: 'h12', name: 'CLN Adora Handbag', category: 'Handbags', image: './images/adora.avif' },
+      { id: 'h13', name: 'CLN Danny Handbag', category: 'Handbags', image: './images/danny.avif' },
+      { id: 'h14', name: 'CLN Lyra Handbag', category: 'Handbags', image: './images/lyra.avif' },
+      { id: 'h15', name: 'CLN Arceli Handbag', category: 'Handbags', image: './images/arceli.avif' },
+      { id: 'h16', name: 'CLN Staku Handbag', category: 'Handbags', image: './images/staku.avif' },
 
-      // Shoulder Bags
-      { id: 's1', name: 'CLN 0125D-Chandria Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 's2', name: 'CLN 1123O-Ohaine Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 's3', name: 'CLN 0925O-Solana Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 's4', name: 'CLN 0925D-Chanellie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 's5', name: 'CLN 1025U-Jesanie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 's6', name: 'CLN 1225D-Aleyah Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 's7', name: 'CLN 1225D-Macrene Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 's8', name: 'CLN 1025D-Sammy Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 's9', name: 'CLN 0925D-Leira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 's10', name: 'CLN 1025D-Khaira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 's11', name: 'CLN 0925O-Aviary Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 's12', name: 'CLN 1225D-Rory Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 's13', name: 'CLN 1225H-Hillary Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 's14', name: 'CLN 0525H-Thelma Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 's15', name: 'CLN Blaire Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 's16', name: 'CLN Connie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 's17', name: 'CLN Maren Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 's18', name: 'CLN Safira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 's19', name: 'CLN Althea Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 's20', name: 'CLN Amaya Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 's21', name: 'CLN Jordaine Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 's22', name: 'CLN Larkin Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+      // Shoulder Bags (Blaire removed)
+      { id: 's1', name: 'CLN 0125D-Chandria Shoulder Bag', category: 'Shoulder Bags', image: './images/chandria.avif' },
+      { id: 's2', name: 'CLN 1123O-Ohaine Shoulder Bag', category: 'Shoulder Bags', image: './images/ohaine.avif' },
+      { id: 's3', name: 'CLN 0925O-Solana Shoulder Bag', category: 'Shoulder Bags', image: './images/solana.avif' },
+      { id: 's4', name: 'CLN 0925D-Chanellie Shoulder Bag', category: 'Shoulder Bags', image: './images/chanellie.avif' },
+      { id: 's5', name: 'CLN 1025U-Jesanie Shoulder Bag', category: 'Shoulder Bags', image: './images/jesanie.avif' },
+      { id: 's6', name: 'CLN 1225D-Aleyah Shoulder Bag', category: 'Shoulder Bags', image: './images/aleyah.avif' },
+      { id: 's7', name: 'CLN 1225D-Macrene Shoulder Bag', category: 'Shoulder Bags', image: './images/macrene.avif' },
+      { id: 's8', name: 'CLN 1025D-Sammy Shoulder Bag', category: 'Shoulder Bags', image: './images/sammy.avif' },
+      { id: 's9', name: 'CLN 0925D-Leira Shoulder Bag', category: 'Shoulder Bags', image: './images/leira.avif' },
+      { id: 's10', name: 'CLN 1025D-Khaira Shoulder Bag', category: 'Shoulder Bags', image: './images/khaira.avif' },
+      { id: 's11', name: 'CLN 0925O-Aviary Shoulder Bag', category: 'Shoulder Bags', image: './images/aviary.avif' },
+      { id: 's12', name: 'CLN 1225D-Rory Shoulder Bag', category: 'Shoulder Bags', image: './images/rory.avif' },
+      { id: 's13', name: 'CLN 1225H-Hillary Shoulder Bag', category: 'Shoulder Bags', image: './images/hillary.avif' },
+      { id: 's14', name: 'CLN 0525H-Thelma Shoulder Bag', category: 'Shoulder Bags', image: './images/thelma.avif' },
+      { id: 's16', name: 'CLN Connie Shoulder Bag', category: 'Shoulder Bags', image: './images/connie.avif' },
+      { id: 's17', name: 'CLN Maren Shoulder Bag', category: 'Shoulder Bags', image: './images/maren.avif' },
+      { id: 's18', name: 'CLN Safira Shoulder Bag', category: 'Shoulder Bags', image: './images/safira.avif' },
+      { id: 's19', name: 'CLN Althea Shoulder Bag', category: 'Shoulder Bags', image: './images/althea.avif' },
+      { id: 's20', name: 'CLN Amaya Shoulder Bag', category: 'Shoulder Bags', image: './images/amaya.avif' },
+      { id: 's21', name: 'CLN Jordaine Shoulder Bag', category: 'Shoulder Bags', image: './images/jordaine.avif' },
+      { id: 's22', name: 'CLN Larkin Shoulder Bag', category: 'Shoulder Bags', image: './images/larkin.avif' },
 
       // Crossbody Bags
-      { id: 'c1', name: 'CLN 0824S-Satchi Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c2', name: 'CLN 0522S-Rosabella Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c3', name: 'CLN 1121S-Carizza Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c4', name: 'CLN 0223S-Aquila Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c5', name: 'CLN 0924S-Shyrine Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c6', name: 'CLN 1225S-Hally Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c7', name: 'CLN 0525S-Floris Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c8', name: 'CLN 1225D-Lilith Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c9', name: 'CLN Malorie Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
-      { id: 'c10', name: 'CLN Paulette Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' }
+      { id: 'c1', name: 'CLN 0824S-Satchi Crossbody Bag', category: 'Crossbody Bags', image: './images/satchi.avif' },
+      { id: 'c2', name: 'CLN 0522S-Rosabella Crossbody Bag', category: 'Crossbody Bags', image: './images/rosabella.avif' },
+      { id: 'c3', name: 'CLN 1121S-Carizza Crossbody Bag', category: 'Crossbody Bags', image: './images/carizza.avif' },
+      { id: 'c4', name: 'CLN 0223S-Aquila Crossbody Bag', category: 'Crossbody Bags', image: './images/aquila.avif' },
+      { id: 'c5', name: 'CLN 0924S-Shyrine Crossbody Bag', category: 'Crossbody Bags', image: './images/shyrine.avif' },
+      { id: 'c6', name: 'CLN 1225S-Hally Crossbody Bag', category: 'Crossbody Bags', image: './images/hally.avif' },
+      { id: 'c7', name: 'CLN 0525S-Floris Crossbody Bag', category: 'Crossbody Bags', image: './images/floris.avif' },
+      { id: 'c8', name: 'CLN 1225D-Lilith Crossbody Bag', category: 'Crossbody Bags', image: './images/lilith.avif' },
+      { id: 'c9', name: 'CLN Malorie Crossbody Bag', category: 'Crossbody Bags', image: './images/malorie.avif' },
+      { id: 'c10', name: 'CLN Paulette Crossbody Bag', category: 'Crossbody Bags', image: './images/paulette.avif' }
     ];
 
     const categories = ['All', 'Favorites', 'Tote Bags', 'Handbags', 'Shoulder Bags', 'Crossbody Bags'];
@@ -207,6 +203,10 @@
                           src={bag.image}
                           alt={bag.name}
                           class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            e.target.onerror = null; 
+                            e.target.src = 'https://via.placeholder.com/400x400/fff0f5/e11d48?text=CLN+Bag';
+                          }}
                         />
                         <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-xs font-medium text-rose-500 px-3 py-1 rounded-full shadow-sm border border-pink-100">
                           {bag.category}
