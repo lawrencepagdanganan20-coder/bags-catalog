@@ -1,0 +1,282 @@
+import React, { useState, useMemo } from 'react';
+import { Heart, ShoppingBag, Search, Sparkles } from 'lucide-react';
+
+const initialBags = [
+  // Tote Bags
+  { id: 't1', name: 'CLN 0621T-Karoline Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 't2', name: 'CLN 0422T-Kiarra Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 't3', name: 'CLN 0824T-Karrie Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 't4', name: 'CLN 0924T-Steffi Totebag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 't5', name: 'CLN Lizzie Tote Bag', category: 'Tote Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+
+  // Handbags
+  { id: 'h1', name: 'CLN 0521H-Addeline Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h2', name: 'CLN 0724H-Tattah Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h3', name: 'CLN 0325H-Trevor Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h4', name: 'CLN 1125D-Armina Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h5', name: 'CLN Vienne Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h6', name: 'CLN Vera Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h7', name: 'CLN Lianne Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h8', name: 'CLN Ethel Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h9', name: 'CLN Farlane Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h10', name: 'CLN Puff Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h11', name: 'CLN Fumi Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h12', name: 'CLN Adora Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h13', name: 'CLN Danny Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h14', name: 'CLN Lyra Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h15', name: 'CLN Arceli Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 'h16', name: 'CLN Staku Handbag', category: 'Handbags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+
+  // Shoulder Bags
+  { id: 's1', name: 'CLN 0125D-Chandria Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 's2', name: 'CLN 1123O-Ohaine Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 's3', name: 'CLN 0925O-Solana Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 's4', name: 'CLN 0925D-Chanellie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 's5', name: 'CLN 1025U-Jesanie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 's6', name: 'CLN 1225D-Aleyah Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 's7', name: 'CLN 1225D-Macrene Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 's8', name: 'CLN 1025D-Sammy Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 's9', name: 'CLN 0925D-Leira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 's10', name: 'CLN 1025D-Khaira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 's11', name: 'CLN 0925O-Aviary Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 's12', name: 'CLN 1225D-Rory Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 's13', name: 'CLN 1225H-Hillary Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 's14', name: 'CLN 0525H-Thelma Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 's15', name: 'CLN Blaire Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 's16', name: 'CLN Connie Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 's17', name: 'CLN Maren Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 's18', name: 'CLN Safira Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 's19', name: 'CLN Althea Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 's20', name: 'CLN Amaya Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 's21', name: 'CLN Jordaine Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 's22', name: 'CLN Larkin Shoulder Bag', category: 'Shoulder Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+
+  // Crossbody / Sling Bags
+  { id: 'c1', name: 'CLN 0824S-Satchi Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c2', name: 'CLN 0522S-Rosabella Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c3', name: 'CLN 1121S-Carizza Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c4', name: 'CLN 0223S-Aquila Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c5', name: 'CLN 0924S-Shyrine Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c6', name: 'CLN 1225S-Hally Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c7', name: 'CLN 0525S-Floris Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c8', name: 'CLN 1225D-Lilith Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c9', name: 'CLN Malorie Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=600&q=80' },
+  { id: 'c10', name: 'CLN Paulette Crossbody Bag', category: 'Crossbody Bags', image: 'https://images.unsplash.com/photo-1584916201218-f4242ceb4809?auto=format&fit=crop&w=600&q=80' }
+];
+
+export default function App() {
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Navigation tab categories
+  const categories = ['All', 'Favorites', 'Tote Bags', 'Handbags', 'Shoulder Bags', 'Crossbody Bags'];
+
+  const toggleFavorite = (bagId) => {
+    setFavoriteIds((prev) =>
+      prev.includes(bagId) ? prev.filter((id) => id !== bagId) : [...prev, bagId]
+    );
+  };
+
+  const filteredBags = useMemo(() => {
+    return initialBags.filter((bag) => {
+      const matchesSearch = bag.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+      if (!matchesSearch) return false;
+
+      if (activeCategory === 'Favorites') {
+        return favoriteIds.includes(bag.id);
+      }
+
+      if (activeCategory === 'All') return true;
+
+      return bag.category === activeCategory;
+    });
+  }, [activeCategory, favoriteIds, searchQuery]);
+
+  return (
+    <div className="min-h-screen bg-pink-50 font-sans text-gray-800 flex flex-col selection:bg-rose-200 selection:text-rose-800">
+      
+      {}
+      <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-20 border-b border-pink-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+          
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setActiveCategory('All')}>
+            <div className="bg-rose-100 p-2 rounded-full text-rose-500 shadow-inner">
+              <Sparkles size={24} className="fill-rose-200" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-serif font-bold tracking-wide text-gray-800">
+                CLN <span className="text-rose-400 font-normal italic">Bags Catalog</span>
+              </h1>
+            </div>
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-pink-300" size={18} />
+            <input
+              type="text"
+              placeholder="Search CLN bag style..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 bg-pink-50/50 rounded-full border border-pink-200 text-sm text-gray-700 placeholder-pink-300 focus:outline-none focus:ring-2 focus:ring-rose-300 transition-all"
+            />
+          </div>
+
+        </div>
+      </header>
+
+      {}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow">
+        
+        {/* Quote Hero Banner */}
+        <div className="text-center my-8 max-w-3xl mx-auto bg-white/70 backdrop-blur-sm p-8 rounded-3xl shadow-sm border border-pink-100 relative overflow-hidden">
+          <div className="absolute -top-6 -right-6 text-pink-100/50 pointer-events-none">
+            <Heart size={140} className="fill-pink-100" />
+          </div>
+          <p className="font-serif italic text-xl md:text-2xl text-rose-500 leading-relaxed font-light">
+            "To fall in love with elegance is to embrace the simplicity of being yourself."
+          </p>
+          <div className="mt-3 w-16 h-0.5 bg-rose-200 mx-auto rounded-full"></div>
+          <p className="mt-2 text-xs uppercase tracking-widest text-pink-400 font-medium">
+            CLN Modest Elegance
+          </p>
+        </div>
+
+        {}
+        <div className="flex flex-wrap justify-center items-center gap-2 md:gap-3 mb-10">
+          {categories.map((category) => {
+            const isFav = category === 'Favorites';
+            const isActive = activeCategory === category;
+
+            return (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`relative px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 border shadow-sm
+                  ${
+                    isActive
+                      ? 'bg-rose-400 text-white border-rose-400 shadow-rose-200 shadow-md scale-105'
+                      : 'bg-white text-gray-600 border-pink-100 hover:bg-rose-50 hover:text-rose-500 hover:border-pink-200'
+                  }
+                `}
+              >
+                {isFav && <Heart size={16} className={isActive ? 'fill-white' : 'fill-rose-400 text-rose-400'} />}
+                <span>{category}</span>
+                
+                {/* Counter Badge for Favorites */}
+                {isFav && (
+                  <span
+                    className={`ml-1 px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                      isActive
+                        ? 'bg-white text-rose-500'
+                        : 'bg-rose-100 text-rose-600'
+                    }`}
+                  >
+                    {favoriteIds.length}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {}
+        {filteredBags.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {filteredBags.map((bag) => {
+              const isHearted = favoriteIds.includes(bag.id);
+
+              return (
+                <div 
+                  key={bag.id} 
+                  className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col border border-pink-100 hover:border-pink-200"
+                >
+                  {/* Image container */}
+                  <div className="relative h-64 overflow-hidden bg-pink-100/30">
+                    <img 
+                      src={bag.image} 
+                      alt={bag.name} 
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    
+                    {/* Category pill tag */}
+                    <div className="absolute top-3 left-3 bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-xs font-medium text-rose-500 shadow-sm border border-pink-50">
+                      {bag.category}
+                    </div>
+
+                    {/* Heart Button */}
+                    <button
+                      onClick={() => toggleFavorite(bag.id)}
+                      className="absolute top-3 right-3 p-2.5 rounded-full bg-white/90 backdrop-blur-md text-rose-400 hover:text-rose-600 hover:scale-110 active:scale-95 transition-all shadow-md border border-pink-100"
+                      aria-label={isHearted ? 'Remove from favorites' : 'Add to favorites'}
+                    >
+                      <Heart 
+                        size={18} 
+                        className={`transition-colors duration-300 ${isHearted ? 'fill-rose-400 text-rose-400' : 'text-gray-400 hover:text-rose-400'}`} 
+                      />
+                    </button>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-5 flex-grow flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-serif text-lg font-medium text-gray-800 leading-snug mb-1 group-hover:text-rose-500 transition-colors">
+                        {bag.name}
+                      </h3>
+                      <p className="text-xs text-rose-300 uppercase tracking-widest font-sans font-medium">CLN Official</p>
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-pink-50 flex items-center justify-between">
+                      <span className="text-xs text-gray-400">Authentic Style</span>
+                      <button 
+                        onClick={() => toggleFavorite(bag.id)}
+                        className="text-xs font-medium text-rose-400 hover:text-rose-600 transition-colors flex items-center gap-1"
+                      >
+                        {isHearted ? 'Hearted' : 'Heart bag'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-20 bg-white/60 backdrop-blur-sm rounded-3xl border border-pink-100 max-w-lg mx-auto shadow-sm">
+            <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-rose-400">
+              <Heart size={32} className="fill-pink-200" />
+            </div>
+            <h3 className="font-serif text-xl font-medium text-gray-800 mb-2">
+              {activeCategory === 'Favorites' ? 'No Favorited Bags Yet' : 'No Bags Found'}
+            </h3>
+            <p className="text-sm text-gray-500 max-w-sm mx-auto mb-6 px-4">
+              {activeCategory === 'Favorites'
+                ? 'Tap the heart icon on any CLN bag to add it to your personal favorites collection!'
+                : 'Try adjusting your search or category filter to discover more styles.'}
+            </p>
+            {activeCategory === 'Favorites' && (
+              <button
+                onClick={() => setActiveCategory('All')}
+                className="px-6 py-2.5 rounded-full bg-rose-400 text-white text-sm font-medium hover:bg-rose-500 transition-colors shadow-md shadow-rose-200"
+              >
+                Browse All Bags
+              </button>
+            )}
+          </div>
+        )}
+
+      </main>
+
+      {}
+      <footer className="bg-white border-t border-pink-100 py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-sm text-gray-400 font-light">
+            © 2026 CLN Bags Catalog. Crafted with modest love and elegance.
+          </p>
+        </div>
+      </footer>
+
+    </div>
+  );
+}
